@@ -2,7 +2,7 @@ import { AddTodo, EditTodo, Todo } from '../../types'
 import { TodosModel } from '../models'
 import { NotFoundError } from '../errors'
 
-export class TodosService {
+export class TodosUseCases {
   private NOT_FOUND = '"todo" not found'
   constructor(private todosModel: TodosModel) { }
 
