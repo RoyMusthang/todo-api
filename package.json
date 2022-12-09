@@ -29,7 +29,6 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --config jest.config.js",
-    "test:staged": "jest --config jest.config.js --watch"
+    "lint": "eslint src/** --ext .ts --fix --no-error-on-unmatched-pattern"
   }
 }
