@@ -4,13 +4,13 @@ import { AddTodo, EditTodo, Todo } from '../../types'
 
 export class TodosModel {
   async list(): Promise<Todo[]> {
-    const result = await TodoDAO.find({ raw: true }, '-_id')
+    const result = await TodoDAO.find({}, '-_id')
     return result as unknown as Todo[]
   }
 
   async add(data: AddTodo): Promise<Todo['id']> {
     const id = crypto.randomUUID()
-    const result = await TodoDAO.create({ id, ...data, createdAt: new Date() })
+    const result = await TodoDAO.create({ id, ...data, createdAt: new Date().toLocaleString('pt-br') })
     return result.id
   }
 
@@ -20,7 +20,7 @@ export class TodosModel {
   }
 
   async edit(id: Todo['id'], changes: EditTodo): Promise<void> {
-    await TodoDAO.findOneAndUpdate({ id }, { ...changes, updatedAt: new Date() })
+    await TodoDAO.findOneAndUpdate({ id }, { ...changes, updatedAt: new Date().toLocaleString('pt-br') })
   }
 
   async remove(id: Todo['id']): Promise<void> {

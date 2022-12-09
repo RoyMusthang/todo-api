@@ -1,6 +1,8 @@
-import { connect } from 'mongoose'
+import { connect, set } from 'mongoose'
 import vars from '../vars'
 export * from './todos.dao'
+
+set('strictQuery', false)
 
 const mongoose: any = {
   async authenticate(): Promise<void> {

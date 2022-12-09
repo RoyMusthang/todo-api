@@ -12,6 +12,7 @@ export class TodosUseCases {
   }
   async add(data: AddTodo): Promise<Todo['id']> {
     const id = await this.todosModel.add(data)
+    console.log(id)
     return id
   }
 
