@@ -13,6 +13,12 @@ export class TodosController {
     return result
   }
 
+  async get(params: unknown): Promise<Todo> {
+    const { id } = await this.todosValidator.paramsId(params)
+    const result = await this.todosTodosUseCases.get(id)
+    return result
+  }
+
   async add(body: unknown): Promise<Todo> {
     const data = await this.todosValidator.bodyAdd(body)
     const id = await this.todosTodosUseCases.add(data)

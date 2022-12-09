@@ -17,6 +17,12 @@ todosRoute.delete('/:id', async (req, res) => {
   res.sendStatus(204)
 })
 
+// getTodo
+todosRoute.get('/:id', async (req, res) => {
+  const result = await todosController.get(req.params)
+  res.json(result)
+})
+
 // listTodo
 todosRoute.get('/', async (_, res) => {
   const result = await todosController.list()
