@@ -12,7 +12,7 @@ api.use(corsMiddleware)
 
 // routes
 api.use('/todos', todosRoute)
-api.get('/', (_, res) => res.send())
+api.get('/', (_, res) => res.send('on'))
 
 // res middlewares
 api.use(errorHandlerMiddleware)

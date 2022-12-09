@@ -33,6 +33,7 @@
     "prepare": "husky install",
     "lint": "eslint src/** --ext .ts --fix --no-error-on-unmatched-pattern",
     "test": "jest",
-    "test:staged": ""
+    "test:staged": "",
+    "dev": "tsnd --respawn --transpile-only --cls --exit-child src/server.ts"
   }
 }
