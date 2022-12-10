@@ -9,6 +9,7 @@
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.12",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
     "eslint": "^8.29.0",
@@ -34,7 +35,6 @@
     "prepare": "husky install",
     "lint": "eslint src/** --ext .ts --fix --no-error-on-unmatched-pattern",
     "test": "jest",
-    "test:unit": "jest -- -c '**/*.spec.ts'",
     "test:coverage": "jest --coverage --runInBand --verbose --silent --noStackTrace",
     "dev": "tsnd --respawn --transpile-only --cls --exit-child src/server.ts"
   }
