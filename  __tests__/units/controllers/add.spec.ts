@@ -1,49 +1,41 @@
-import { Request, Response } from 'express'
 import { TodosController } from '../../../src/app/controllers'
-import { TodosUseCases } from '../../../src/app/useCases'
-import { MockTodoModel, MockTodoUseCase, MockTodoValidator } from '../../__mocks__'
+import { MockTodoUseCase, MockTodoValidator } from '../../__mocks__'
+
 
 const todoValidator = new MockTodoValidator()
-const mockTodoModel = new MockTodoModel()
-const todoUseCase = new TodosUseCases(mockTodoModel)
-
-jest.mock('../../../src/app/useCases', () => ({
-  TodosUseCases: jest.fn().mockImplementation(() => ({
-    list: jest.fn().mockResolvedValueOnce([]),
-    add: jest.fn().mockResolvedValueOnce('4f585e32-82c8-465f-bdfe-786dedaa72f7'),
-    get: jest.fn().mockResolvedValueOnce({
-      "id": "4f585e32-82c8-465f-bdfe-786dedaa72f7",
-      "description": "modify",
-      "isDone": false,
-    }),
-    edit: jest.fn().mockResolvedValueOnce({
-      "id": "4f585e32-82c8-465f-bdfe-786dedaa72f7",
-      "description": "modify",
-      "isDone": false,
-    }),
-    remove: jest.fn().mockResolvedValueOnce(undefined),
-  }))
-}))
+const todoUseCase = new MockTodoUseCase()
 
 const todoController = new TodosController(todoValidator, todoUseCase)
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('Todo controller add method unit test', () => {
   it('passing everything correctly is expected to pass', async () => {
+    todoUseCase.add.mockResolvedValueOnce('c8aac5ad-a130-4607-85df-8e594bf5b893')
+    todoUseCase.get.mockResolvedValueOnce({
+      id: 'c8aac5ad-a130-4607-85df-8e594bf5b893',
+      description: 'mocked',
+      isDone: false
+    })
+
     const body = {
-      description: 'description',
-      isDone: false,
+      description: 'mocked',
+      isDone: false
     }
 
-    const controller = await todoController.add(body)
-
-    expect(controller).toEqual({
-      "id": "4f585e32-82c8-465f-bdfe-786dedaa72f7",
-      "description": "modify",
-      "isDone": false,
+    await expect(todoController.add(body)).resolves.toEqual({
+      id: 'c8aac5ad-a130-4607-85df-8e594bf5b893',
+      description: 'mocked',
+      isDone: false
     })
+  })
+
+  it('passing an invalid body is expected to throw an error', async () => {
+    todoValidator.bodyAdd.mockRejectedValueOnce(new Error('mocked'))
+
+    const body = {
+      description: 'mocked',
+      isDone: 'false'
+    }
+
+    await expect(todoController.add(body)).rejects.toThrow()
   })
 })
