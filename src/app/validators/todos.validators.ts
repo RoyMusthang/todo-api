@@ -2,7 +2,13 @@ import Joi from 'joi'
 import { AddTodo, EditTodo, Indexable } from '../../types'
 import { runSchema } from '.'
 
-export class TodosValidator {
+export interface ITodosValidator {
+  paramsId(value: unknown): Promise<Indexable>
+  bodyAdd(value: unknown): Promise<AddTodo>
+  bodyEdit(value: unknown): Promise<EditTodo>
+}
+
+export class TodosValidator implements ITodosValidator {
   async paramsId(value: unknown): Promise<Indexable> {
     const schema = Joi.object<Indexable>({
       id: Joi.string().required().length(36),

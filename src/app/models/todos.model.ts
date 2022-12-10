@@ -2,7 +2,15 @@ import crypto from 'crypto'
 import { TodoDAO } from '../../db'
 import { AddTodo, EditTodo, Todo } from '../../types'
 
-export class TodosModel {
+export interface ITodosModel {
+  list(): Promise<Todo[]>
+  add(data: AddTodo): Promise<Todo['id']>
+  get(id: Todo['id']): Promise<Todo>
+  edit(id: Todo['id'], changes: EditTodo): Promise<void>
+  remove(id: Todo['id']): Promise<void>
+}
+
+export class TodosModel implements ITodosModel {
   async list(): Promise<Todo[]> {
     const result = await TodoDAO.find({}, '-_id')
     return result as unknown as Todo[]

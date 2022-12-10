@@ -2,7 +2,15 @@ import { Todo } from '../../types'
 import { TodosUseCases } from '../useCases'
 import { TodosValidator } from '../validators'
 
-export class TodosController {
+export interface ITodosController {
+  list(): Promise<Todo[]>
+  get(params: unknown): Promise<Todo>
+  add(body: unknown): Promise<Todo>
+  edit(params: unknown, body: unknown): Promise<Todo>
+  remove(params: unknown): Promise<void>
+}
+
+export class TodosController implements ITodosController {
   constructor(
     private todosValidator: TodosValidator,
     private todosTodosUseCases: TodosUseCases

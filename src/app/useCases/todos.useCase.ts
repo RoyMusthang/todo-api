@@ -2,7 +2,15 @@ import { AddTodo, EditTodo, Todo } from '../../types'
 import { TodosModel } from '../models'
 import { NotFoundError } from '../errors'
 
-export class TodosUseCases {
+export interface ITodosUseCases {
+  list(): Promise<Todo[]>
+  add(data: AddTodo): Promise<Todo['id']>
+  get(id: Todo['id']): Promise<Todo>
+  edit(id: Todo['id'], changes: EditTodo): Promise<void>
+  remove(id: Todo['id']): Promise<void>
+}
+
+export class TodosUseCases implements ITodosUseCases{
   private NOT_FOUND = '"todo" not found'
   constructor(private todosModel: TodosModel) { }
 
