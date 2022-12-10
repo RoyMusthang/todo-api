@@ -36,10 +36,10 @@
     "lint": "eslint src/** --ext .ts --fix --no-error-on-unmatched-pattern",
     "test": "jest",
     "prestart": "npm run build",
-    "start": "node src/server.js",
+    "start": "node dist/src/server.js",
     "test:coverage": "jest --coverage --runInBand --verbose --silent --noStackTrace",
     "dev": "tsnd --respawn --transpile-only --cls --exit-child src/server.ts",
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc -p .",
     "compose:up": "docker-compose up --build -d",
     "compose:down": "docker-compose down --rmi local --volumes --remove-orphans"
   }

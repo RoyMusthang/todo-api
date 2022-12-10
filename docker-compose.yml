@@ -1,20 +1,6 @@
 version: '3.9'
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    container_name: api
-    restart: always
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-      - "3001:3001"
-    environment:
-      - MONGO_URI=mongodb://db:27017/mamboo-todo'
-
   db:
     image: mongo
     container_name: mongo
@@ -24,3 +10,18 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: api
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://db:27017/mamboo-todo'
+
+ 

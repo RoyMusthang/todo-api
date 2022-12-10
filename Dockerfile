@@ -1,11 +1,28 @@
+FROM node:16-alpine as builder
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json yarn.lock ./
+
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN yarn build
+
 FROM node:16-alpine
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY package.json ./
-COPY tsconfig.json ./
-COPY . .
-RUN npm install --silent
-RUN npm run build
+# Install app dependencies
+COPY package.json yarn.lock ./
 
-ENTRYPOINT [ "npm", "start" ]
+RUN yarn install --production --frozen-lockfile
+
+COPY --from=builder /usr/src/app/dist ./dist
+
+EXPOSE 8080
+CMD [ "node", "dist/src/server.js" ]
