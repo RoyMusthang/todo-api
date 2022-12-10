@@ -5,7 +5,7 @@ import { AddTodo, EditTodo, Todo } from '../../types'
 export interface ITodosModel {
   list(): Promise<Todo[]>
   add(data: AddTodo): Promise<Todo['id']>
-  get(id: Todo['id']): Promise<Todo>
+  get(id: Todo['id']): Promise<Todo | null>
   edit(id: Todo['id'], changes: EditTodo): Promise<void>
   remove(id: Todo['id']): Promise<void>
 }
@@ -22,7 +22,7 @@ export class TodosModel implements ITodosModel {
     return result.id
   }
 
-  async get(id: Todo['id']): Promise<Todo> {
+  async get(id: Todo['id']): Promise<Todo | null> {
     const result = await TodoDAO.findOne({ id }, '-_id')
     return result as unknown as Todo
   }

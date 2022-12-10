@@ -26,6 +26,7 @@ export class TodosUseCases implements ITodosUseCases{
   async get(id: Todo['id']): Promise<Todo> {
     const todo = await this.todosModel.get(id)
     if (!todo) throw new NotFoundError(this.NOT_FOUND)
+
     return todo
   }
 
