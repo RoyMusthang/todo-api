@@ -10,6 +10,6 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (err, _req, res, _nex
       res.status(400).json({ message })
       break
     default:
-      res.sendStatus(500)
+      res.status(500).json({ message: 'Internal Server Error'})
   }
 }
