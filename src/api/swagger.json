@@ -1,0 +1,459 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Mamboo Todo List",
+    "description": "Teste back-end mamboo",
+    "contact": {
+      "email": "josuevitorp.lobo@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "todo"
+    }
+  ],
+  "paths": {
+    "/todos": {
+      "post": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "adiciona uma nova tarefa no banco de dados.",
+        "operationId": "create",
+        "requestBody": {
+          "description": "Objeto com as informações da tarefa a ser cadastrada.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NOVA_TAREFA"
+              },
+              "example": {
+                "description": "comprar trigo segunda-feira",
+                "isDone": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Tarefa cadastrada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RESPOSTA_CADASTRO_TAREFA"
+                },
+                "example": {
+                  "id": "b0fbd52b-4679-4a7a-80d0-6b768565c33a",
+                  "description": "comprar trigo segunda-feira",
+                  "isDone": false,
+                  "createdAt": "2022-11-12T19:47:28.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Algum dado informado não está de acordo com as regras do endpoint.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_VALIDACAO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_INTERNO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Lista todas as tarefas cadastradas no banco de dados",
+        "operationId": "list all todo",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RESPOSTA_CADASTRO_TAREFA"
+                },
+                "example": [
+                  {
+                    "id": "b0fbd52b-4679-4a7a-80d0-6b768565c33a",
+                    "description": "comprar trigo segunda-feira",
+                    "isDone": false,
+                    "createdAt": "2022-11-12T19:47:28.000Z"
+                  },
+                  {
+                    "id": "asrbd52b-4679-4a7a-80d0-6b768565c33a",
+                    "description": "limpar a casa",
+                    "isDone": true,
+                    "createdAt": "2022-11-12T19:47:28.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno, por favor tente novamente mais tarde ou contate o desenvolvedor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_INTERNO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos/{todoId}": {
+      "put": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Atualiza as propriedades de uma tarefa cadastrada no banco de dados.",
+        "operationId": "update todo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "todoId",
+            "description": "ID da tarefa que gostaria de atualizar.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "b0fbd52b-4679-4a7a-80d0-6b768565c33a"
+          }
+        ],
+        "requestBody": {
+          "description": "No body deverão ser informadas as propriedades que serão atualizadas e seus novos valores. Não é necessário informar propriedades que não serão atualizadas.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ATUALIZAR_TAREFA"
+              },
+              "example": {
+                "isDone": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Tarefa atualizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RESPOSTA_ATUALIZACAO_TAREFA"
+                },
+                "example": {
+                  "id": "b0fbd52b-4679-4a7a-80d0-6b768565c33a",
+                  "description": "comprar trigo segunda-feira",
+                  "isDone": true,
+                  "createdAt": "2022-11-12T19:47:28.000Z",
+                  "updatedAt": "2022-11-12T19:49:25.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Algum dado informado não está de acordo com as regras do endpoint.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_VALIDACAO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não foi encontrada uma tarefa com o id informado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_TAREFA_NAO_ENCONTRADO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno, por favor tente novamente mais tarde ou contate o desenvolvedor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_INTERNO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Deleta uma tarefa cadastrada no banco de dados.",
+        "operationId": "delete todo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "todoId",
+            "description": "ID da tarefa que gostaria de deletar.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "b0fbd52b-4679-4a7a-80d0-6b768565c33a"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tarefa deletada com sucesso."
+          },
+          "404": {
+            "description": "Não foi encontrada uma tarefa com o id informado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_TAREFA_NAO_ENCONTRADO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno, por favor tente novamente mais tarde ou contate o desenvolvedor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_INTERNO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Lista todas as tarefas do quadro informado de forma ordenada por status e priority.",
+        "operationId": "list all todo from board",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "todoId",
+            "schema": {
+              "type": "string",
+              "example": "04907ae6-2f71-4f98-bfa4-a3a3e9d060a3",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista com todas as tarefas do quadro informado ordenadas por status e priority",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RESPOSTA_LISTA_TAREFAS"
+                },
+                "example": {
+                  "id": "b0fbd52b-4679-4a7a-80d0-6b768565c33a",
+                  "description": "comprar trigo segunda-feira",
+                  "isDone": false,
+                  "createdAt": "2022-11-12T19:47:28.000Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Todo não foi encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "\"todo\" not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno, por favor tente novamente mais tarde ou contate o desenvolvedor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ERRO_INTERNO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NOVA_TAREFA": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "boardId": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/ATUALIZAR_TAREFA"
+          }
+        ]
+      },
+      "RESPOSTA_CADASTRO_TAREFA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "RESPOSTA_LISTA_TAREFAS": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "isDone": {
+              "type": "boolean"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ATUALIZAR_TAREFA": {
+        "type": "object",
+        "properties": {
+          "isDone": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "RESPOSTA_ATUALIZACAO_TAREFA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "ATUALIZAR_LISTA": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "integer",
+            "enum": [
+              1,
+              -1
+            ]
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ERRO_TAREFA_NAO_ENCONTRADO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "\"todo\" not found"
+          }
+        }
+      },
+      "ERRO_VALIDACAO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "\"description\" must be a string"
+          }
+        }
+      },
+      "ERRO_INTERNO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
