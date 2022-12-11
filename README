@@ -1,5 +1,10 @@
 # Mamboo Todo List
 
+## Documentação
+
+A documentação de operação da API foi feita utilizando `Swagger`, e pode ser consultada de forma interativa através da primeira rota da api: `localhost:3001/`, enquanto os demais endpoint são contidos no : `localhost:3001/todos/`
+
+Além de explicar e exemplificar a utilização da API, as páginas ainda permitem testar os endpoints diretamente pela interface gráfica da documentação.
 
 ## Rodando Aplicação
 
@@ -84,3 +89,5 @@ Obs: para rodar a aplicação dessa forma você precisar ter node, git, npm/yarn
 ## Arquitetura
 
 ![Diagrama da arquitetura](/arch.png "Diagrama da arquitetura")
+
+
