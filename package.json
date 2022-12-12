@@ -41,7 +41,7 @@
     "test:coverage": "jest --coverage --runInBand --verbose --silent --noStackTrace",
     "dev": "tsnd --respawn --transpile-only --cls --exit-child src/server.ts",
     "build": "tsc -p .",
-    "compose:up": "docker-compose up --build -d",
-    "compose:down": "docker-compose down --rmi local --volumes --remove-orphans"
+    "compose:up": "docker compose up --build -d",
+    "compose:down": "docker compose down --rmi local --volumes --remove-orphans"
   }
 }
