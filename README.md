@@ -98,8 +98,6 @@ Obs: para rodar a aplicação dessa forma você precisar ter node, git, npm/yarn
 ## Arquitetura
 
 ![Diagrama da arquitetura](/arch.png "Diagrama da arquitetura")
-
-A estrutura que optei por aplicar tem com base a ideia de isolar a aplicação em três partes:
   
 A estrutura que optei por aplicar tem com base a ideia de isolar a aplicação em três partes:
  ## api
