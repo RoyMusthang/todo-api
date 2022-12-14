@@ -62,7 +62,7 @@ Obs: para rodar a aplicação dessa forma você precisar ter node, git, npm/yarn
 2. Entre no diretório do projeto
 
 ```bash
-  cd Mamboo-Kanban-API
+  cd mamboo-todo
 ```
 
 3. Instale as dependências
