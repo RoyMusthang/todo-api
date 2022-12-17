@@ -28,7 +28,7 @@ export class TodosModel implements ITodosModel {
   }
 
   async edit(id: Todo['id'], changes: EditTodo): Promise<void> {
-    await TodoDAO.findOneAndUpdate({ id }, { ...changes, updatedAt: new Date().toLocaleString('pt-br') })
+    await TodoDAO.findOneAndUpdate({ id }, { ...changes, updatedAt: new Date()})
   }
 
   async remove(id: Todo['id']): Promise<void> {
